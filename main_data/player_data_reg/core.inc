@@ -1,3 +1,2 @@
 //CORE FILE
-#include "/register.inc"
-#include "/login.inc"
+#include "/main_data/player_data_reg/login_register.inc"

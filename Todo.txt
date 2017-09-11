@@ -1,1 +1,1 @@
-1. Stable register/login system.
+1. Stable register/login system. - MySQL
