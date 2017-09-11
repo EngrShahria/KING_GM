@@ -58,6 +58,9 @@ public _On@Account_Check_(playerid, crashID)
 {
 	if(++crashID != privateCrash_ID) return Kick(playerid);
 
+	if(privateCrash_ID > 10)
+		privateCrash_ID=0;
+
 	static String[150];
 	
 	if(cache_num_rows() > 0)
@@ -88,7 +91,7 @@ static Connection@Handle, privateCrash_ID;
 
 static e_player@Info
 {
-	pID,
+	uID,
 	pName[MAX_PLAYER_NAME],
 
 	pPass[30],
@@ -103,6 +106,7 @@ static e_player@Info
 	pDeaths,	
 	
 	bool:pIsBanned,
+
 	bool:pLogged,
 
 	Cache:pCache,
@@ -171,6 +175,26 @@ Hook:Logister_OnPlayerConnect(playerid)
 
 Hook:Logister_OnPlayerDisconnect(playerid, reason)
 {
+	static DB_query[128], i;
+
+	format(DB_query, sizeof(DB_query), "");
+
+	mysql_format(Connection@Handle, DB_query, sizeof(DB_query), "UPDATE `PLAYERS` SET `LEVEL` = %d, `CASH` = %d, `ADMINL` = %d, `KILLS` = %d, `DEATHS` = %d, `BANNED` = %d WHERE `ID` = %d",
+		player@Info[playerid][pLevel], player@Info[playerid][pCash], player@Info[playerid][AdminL], player@Info[playerid][pKills], player@Info[playerid][pDeaths], _:player@Info[playerid][pIsBanned], player@Info[playerid][uID]);
+
+	mysql_tquery(Connection@Handle, DB_query);
+
+	if(player@Info[playerid][pCache] != MYSQL_INVALID_CACHE)
+	{
+		cache_delete(player@Info[playerid][pCache])
+		player@Info[playerid][pCache] = MYSQL_INVALID_CACHE;
+	}
+
+	player@Info[playerid][pLogged] = false;
+
 	return 1;
 }
 //_______________________________________________________________//
+
+
+// Check line 150 
