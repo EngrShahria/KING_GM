@@ -16,7 +16,7 @@ forward _On@Account_Check_(playerid, crashID);
 
 #define MYSQL_HOST "localhost"
 #define MYSQL_USER "root"
-#define MYSQL_DB "Community"
+#define MYSQL_DB "KING_DM"
 #define MYSQL_PASSWORD ""
 
 
@@ -65,7 +65,7 @@ public _On@Account_Check_(playerid, crashID)
 	
 	if(cache_num_rows() > 0)
 	{
-		cache_get_value(0, "PASSWORD", player@Info[playerid][pPass], sizeof(e_player@Info[pPass]) );
+		cache_get_value(0, "PASSWORD", player@Info[playerid][pPass], sizeof(e_player@Info[pPass]));
 
 		player@Info[MAX_PLAYERS][pCache] = cache_save();
 
@@ -162,10 +162,11 @@ Hook:Logister_OnPlayerConnect(playerid)
 	static DB_query[128], i;
 
 	format(DB_query, sizeof(DB_query), "");
+
 	for(i=0; e_player@Info:i < e_player@Info; i++)
 		player@Info[playerid][e_Player@Info:i]=0;
 
-	format(player@Info[playerid][pName], sizeof(player@Info[playerid][pName]), "%s", GetPName(playerid);
+	format(player@Info[playerid][pName], sizeof(player@Info[playerid][pName]), "%s", GetPName(playerid));
 
 	mysql_format(Connection@Handle, DB_query, sizeof(DB_query), "SELECT * FROM `PLAYERS` WHERE `USERNAME` = '%e' LIMIT 1", player@Info[playerid][pName]);
 	mysql_tquery(Connection@Handle, DB_query, "_On@Account_Check_", "ii", playerid, privateCrash_ID++);
@@ -198,3 +199,4 @@ Hook:Logister_OnPlayerDisconnect(playerid, reason)
 
 
 // Check line 150 
+// Create login / register dialogs.
