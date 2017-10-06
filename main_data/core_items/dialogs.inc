@@ -1,0 +1,4 @@
+#define DIALOG_REGISTER 1
+#define DIALOG_LOGIN 2
+#define DIALOG_SUCCESS_1 3
+#define DIALOG_SUCCESS_2 4
